@@ -1,6 +1,11 @@
 # Simple C++ video player using FFmpeg 4 and SDL 2.0 
 
 Supports video with audio.
+
+## Examples
+
+1 - https://ottverse.com/free-hls-m3u8-test-urls/
+
 ## Windows setup (Tested on x64 environment)
 1 - Install FFMpeg here https://ffmpeg.zeranoe.com/builds/win64/dev/ and add it to your path
 
@@ -34,6 +39,29 @@ Supports video with audio.
 2 - Install SDL >= 2.0<br />
         ```
         sudo apt-get install libsdl2-dev
+        ```
+
+3 - Install:<br />
+        ```
+        make
+        ```
+
+4 - Run<br />
+    ```
+    ./player <video_address>
+    ```
+
+## Mac setup (Tested on Big Sur)
+
+1 - Install FFmpeg version >= 4
+        <br />
+        ```
+        brew update && brew install ffmpeg x264 x265 libavdevice-dev
+        ```
+
+2 - Install SDL >= 2.0<br />
+        ```
+        brew install libsdl2-dev
         ```
 
 3 - Install:<br />
