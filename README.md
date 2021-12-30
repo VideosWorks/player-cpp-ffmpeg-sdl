@@ -25,7 +25,7 @@ Supports video with audio.
 
 7 - Run<br />
     ```
-    ./player <video_address>
+    ./DiscoveryPlayer <video_address>
     ```
 
 ## Linux setup (Tested on Ubuntu)
@@ -48,7 +48,7 @@ Supports video with audio.
 
 4 - Run<br />
     ```
-    ./player <video_address>
+    ./DiscoveryPlayer <video_address>
     ```
 
 ## Mac setup (Tested on Big Sur)
@@ -71,6 +71,8 @@ Supports video with audio.
 
 4 - Run<br />
 ```
-video_address="https://multiplatform-f.akamaihd.net/i/multi/april11/sintel/sintel-hd_,512x288_450_b,640x360_700_b,768x432_1000_b,1024x576_1400_m,.mp4.csmil/master.m3u8"
-./player $video_address
+video_address_2d="https://multiplatform-f.akamaihd.net/i/multi/april11/sintel/sintel-hd_,512x288_450_b,640x360_700_b,768x432_1000_b,1024x576_1400_m,.mp4.csmil/master.m3u8"
+video_address_3d="https://5b44cf20b0388.streamlock.net:8443/vod/smil:abr-360-prod.smil/playlist.m3u8"
+
+./DiscoveryPlayer $video_address_2d
 ```

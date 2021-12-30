@@ -43,6 +43,7 @@ private:
 	AVCodec* pAudioCodec = NULL;
 	AVFrame* pFrame = NULL;
 	AVFrame* pFrameRGB = NULL;
+    int FrameNo = 0;
 
 	uint8_t* buffer = NULL;
 
