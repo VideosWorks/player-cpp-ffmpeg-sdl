@@ -9,10 +9,13 @@
 #ifndef WorldDebugDrawer_hpp
 #define WorldDebugDrawer_hpp
 
-#define GL_GLEXT_PROTOTYPES
-#include <GLES2/gl2.h>
-#include <GLES2/gl2ext.h>
-#include <GLES2/gl2platform.h>
+
+//#define GL_GLEXT_PROTOTYPES
+//#include <GLES2/gl2.h>
+//#include <GLES2/gl2ext.h>
+//#include <GLES2/gl2platform.h>
+
+
 
 //#include "GraphicsPlatform.h"
 //#include "Util.h"
@@ -25,11 +28,110 @@
 #include <thread>
 //#include "SDL.h"
 
+
+
+
+
+
+
+#if defined(__APPLE__)
+#define glGenVertexArrays_NJLIC glGenVertexArraysAPPLE
+#define glBindVertexArray_NJLIC glBindVertexArrayAPPLE
+#define glDeleteVertexArrays_NJLIC glDeleteVertexArraysAPPLE
+#else
+#define glGenVertexArrays_NJLIC glGenVertexArrays
+#define glBindVertexArray_NJLIC glBindVertexArray
+#define glDeleteVertexArrays_NJLIC glDeleteVertexArrays
+#endif
+#define GL_SILENCE_DEPRECATION
+#include <OpenGL/gl.h>
+#include <OpenGL/glext.h>
+
+
+
+
+#include <stdio.h>
+
+#define LOG_INFO(...) printf(__VA_ARGS__)
+#define LOG_ERROR(...) fprintf(stderr, __VA_ARGS__);
+
+static void glErrorCheck()
+{
+    do                                                                           \
+    {                                                                          \
+      for (int error = glGetError(); error; error = glGetError())              \
+        {
+
+            switch (error)                                                       \
+            {                                                                  \
+            case GL_NO_ERROR:                                                  \
+              LOG_INFO(                            \
+                             "GL_NO_ERROR - No error has been recorded. The "  \
+                             "value of this symbolic constant is guaranteed "  \
+                             "to be 0.");                                      \
+              break;                                                           \
+            case GL_INVALID_ENUM:                                              \
+              LOG_ERROR(                              \
+                           "GL_INVALID_ENUM - An unacceptable value is "       \
+                           "specified for an enumerated argument. The "        \
+                           "offending command is ignored and has no other "    \
+                           "side effect than to set the error flag.");         \
+              break;                                                           \
+            case GL_INVALID_VALUE:                                             \
+              LOG_ERROR(                              \
+                           "GL_INVALID_VALUE - A numeric argument is out of "  \
+                           "range. The offending command is ignored and has "  \
+                           "no other side effect than to set the error "       \
+                           "flag.");                                           \
+              break;                                                           \
+            case GL_INVALID_OPERATION:                                         \
+              LOG_ERROR(                              \
+                           "GL_INVALID_OPERATION - The specified operation "   \
+                           "is not allowed in the current state. The "         \
+                           "offending command is ignored and has no other "    \
+                           "side effect than to set the error flag.");         \
+              break;                                                           \
+            case GL_INVALID_FRAMEBUFFER_OPERATION:                             \
+              LOG_ERROR(                              \
+                           "GL_INVALID_FRAMEBUFFER_OPERATION - The command "   \
+                           "is trying to render to or read from the "          \
+                           "framebuffer while the currently bound "            \
+                           "framebuffer is not framebuffer complete (i.e. "    \
+                           "the return value from glCheckFramebufferStatus "   \
+                           "is not GL_FRAMEBUFFER_COMPLETE). The offending "   \
+                           "command is ignored and has no other side effect "  \
+                           "than to set the error flag.");                     \
+              break;                                                           \
+            case GL_OUT_OF_MEMORY:                                             \
+              LOG_ERROR(                              \
+                           "GL_OUT_OF_MEMORY - There is not enough memory "    \
+                           "left to execute the command. The state of the GL " \
+                           "is undefined, except for the state of the error "  \
+                           "flags, after this error is recorded.");            \
+              break;                                                           \
+            default:                                                           \
+              LOG_ERROR( "Unknown (%x)", error);      \
+            }                                                                  \
+        }                                                                      \
+    }                                                                          \
+  while (0);
+}
+
 //namespace njli
 //{
 //  class Camera;
 //    class ShaderProgram;
-    
+
+class Shader {
+    static bool compileShader(GLuint &shader, GLenum type, const std::string &source);
+    static bool linkProgram(GLuint programPointer);
+    static bool validateProgram(GLuint programPointer);
+public:
+    static bool load(const std::string &vertShaderSource, const std::string &fragShaderSource, GLuint &programPointer);
+private:
+
+};
+
   class WorldDebugDrawer : public dd::RenderInterface
   {
   public:

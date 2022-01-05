@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#define DEBUG_SAVE_FRAME_IMAGE
+//#define DEBUG_SAVE_FRAME_IMAGE
 
 #ifdef DEBUG_SAVE_FRAME_IMAGE
 #define STB_IMAGE_WRITE_IMPLEMENTATION

@@ -17,9 +17,13 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
+//#define USE_EGL
+
 #include <pthread.h>
+#ifdef USE_EGL
 #include <EGL/egl.h> // requires ndk r5 or newer
 #include <GLES/gl.h>
+#endif
 #include "WorldDebugDrawer.h"
 
 class WorldDebugDrawer;
@@ -34,7 +38,10 @@ public:
     // They send message to render thread which executes required actions.
     void start();
     void stop();
+
+#ifdef USE_EGL
     void setWindow(ANativeWindow* window);
+#endif
 
 
 private:
@@ -49,12 +56,18 @@ private:
     pthread_mutex_t _mutex;
     enum RenderThreadMessage _msg;
 
+#ifdef USE_EGL
     // android window, supported by NDK r5 and newer
     ANativeWindow* _window;
 
     EGLDisplay _display;
     EGLSurface _surface;
     EGLContext _context;
+
+
+#endif
+    int mWidth;
+    int mHeight;
     GLfloat _angle;
 
     // RenderLoop is called in a rendering thread started in start() method
@@ -69,8 +82,7 @@ private:
     // Helper method for starting the thread
     static void* threadStartCallback(void *myself);
 private:
-    EGLint mWidth;
-    EGLint mHeight;
+
 
     GLuint mProgram;
     GLuint mFrameBuffer;
@@ -85,15 +97,15 @@ private:
 
 };
 
-class Shader {
-    static bool compileShader(GLuint &shader, GLenum type, const std::string &source);
-    static bool linkProgram(GLuint programPointer);
-    static bool validateProgram(GLuint programPointer);
-public:
-    static bool load(const std::string &vertShaderSource, const std::string &fragShaderSource, GLuint &programPointer);
-private:
-
-};
+//class Shader {
+//    static bool compileShader(GLuint &shader, GLenum type, const std::string &source);
+//    static bool linkProgram(GLuint programPointer);
+//    static bool validateProgram(GLuint programPointer);
+//public:
+//    static bool load(const std::string &vertShaderSource, const std::string &fragShaderSource, GLuint &programPointer);
+//private:
+//
+//};
 
 
 #endif // RENDERER_H
