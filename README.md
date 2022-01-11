@@ -1,6 +1,11 @@
 # Simple C++ video player using FFmpeg 4 and SDL 2.0 
 
 Supports video with audio.
+
+## Examples
+
+1 - https://ottverse.com/free-hls-m3u8-test-urls/
+
 ## Windows setup (Tested on x64 environment)
 1 - Install FFMpeg here https://ffmpeg.zeranoe.com/builds/win64/dev/ and add it to your path
 
@@ -20,7 +25,7 @@ Supports video with audio.
 
 7 - Run<br />
     ```
-    ./player <video_address>
+    ./DiscoveryPlayer <video_address>
     ```
 
 ## Linux setup (Tested on Ubuntu)
@@ -43,5 +48,31 @@ Supports video with audio.
 
 4 - Run<br />
     ```
-    ./player <video_address>
+    ./DiscoveryPlayer <video_address>
     ```
+
+## Mac setup (Tested on Big Sur)
+
+1 - Install FFmpeg version >= 4
+        <br />
+        ```
+        brew update && brew install ffmpeg x264 x265 libavdevice-dev
+        ```
+
+2 - Install SDL >= 2.0<br />
+        ```
+        brew install libsdl2-dev
+        ```
+
+3 - Install:<br />
+        ```
+        make
+        ```
+
+4 - Run<br />
+```
+video_address_2d="https://multiplatform-f.akamaihd.net/i/multi/april11/sintel/sintel-hd_,512x288_450_b,640x360_700_b,768x432_1000_b,1024x576_1400_m,.mp4.csmil/master.m3u8"
+video_address_3d="https://5b44cf20b0388.streamlock.net:8443/vod/smil:abr-360-prod.smil/playlist.m3u8"
+
+./DiscoveryPlayer $video_address_2d
+```

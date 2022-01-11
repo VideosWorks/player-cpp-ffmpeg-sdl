@@ -1,5 +1,12 @@
 #include "stdafx.h"
 
+//#define DEBUG_SAVE_FRAME_IMAGE
+
+#ifdef DEBUG_SAVE_FRAME_IMAGE
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "stb_image_write.h"
+#endif
+
 using namespace std;
 
 Player* Player::instance = 0;
@@ -240,7 +247,18 @@ int Player::display_video(void) {
 				Utils::display_ffmpeg_exception(res);
 
 			res = avcodec_receive_frame(pCodecCtx, pFrame);
-			
+
+#ifdef DEBUG_SAVE_FRAME_IMAGE
+            char szFilename[32];
+            sprintf(szFilename, "frame%d.bmp", FrameNo++);
+
+            sws_scale(sws_ctx, pFrame->data,
+                      pFrame->linesize, 0,
+                      pCodecCtx->height,
+                      pFrameRGB->data, pFrameRGB->linesize);
+
+            stbi_write_bmp(szFilename, pCodecCtx->width, pCodecCtx->height, pFrameRGB->linesize[0] / pCodecCtx->width, pFrameRGB->data[0] );
+#endif
 			SDL_UpdateYUVTexture(bmp, NULL, pFrame->data[0], pFrame->linesize[0],
 				pFrame->data[1], pFrame->linesize[1],
 				pFrame->data[2], pFrame->linesize[2]);
